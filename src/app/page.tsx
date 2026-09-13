@@ -17,7 +17,6 @@ import {
   Stethoscope,
   ClipboardList,
   ActivitySquare,
-  Gauge,
   BookOpenCheck,
   Sparkles,
 } from "lucide-react";
@@ -30,7 +29,6 @@ const SLIDES: Slide[] = [
     body:
       "Vitals in one tab, labs in another, notes scattered across shifts. Clinicians re-read the same chart from scratch each time a patient status changes — precious minutes an emergency department rarely has.",
     gradient: "from-ink-900 via-brand-deep to-brand-mid",
-    video: "/videos/slide1.mp4", 
   },
   {
     icon: Sparkles,
@@ -39,7 +37,6 @@ const SLIDES: Slide[] = [
     body:
       "GRUS reads the chart the moment it changes and hands back a short, structured brief — what's new, what's urgent, and what to check next — so the first read takes seconds, not minutes.",
     gradient: "from-brand-deep to-brand-mid",
-    video: "/videos/slide2.mp4", 
   },
   {
     icon: ShieldAlert,
@@ -48,7 +45,6 @@ const SLIDES: Slide[] = [
     body:
       "When data is missing, GRUS says so instead of guessing. Every claim in the brief links straight back to the chart entry it came from, so nothing is taken on faith.",
     gradient: "from-brand-mid to-brand-sky",
-     image: "/images/slide3.jpg",
   },
   {
     icon: Stethoscope,
@@ -57,7 +53,6 @@ const SLIDES: Slide[] = [
     body:
       "Enrolled facilities can access GRUS with a hospital code, clinician credentials, and a one-time passcode. Try the demo sign-in to explore the full patient workflow.",
     gradient: "from-brand-deep via-brand-mid to-brand-sky",
-    image: "/images/slide4.jpg", 
   },
 ];
 
@@ -82,28 +77,28 @@ const RULES = [
 const AGENTS = [
   {
     icon: FileSearch,
-    name: "Intake Agent",
-    body: "Watches new labs, vitals, and notes land on a patient's chart and keeps the record current in real time.",
+    name: "Retriever",
+    body: "Gathers the facts off the chart — labs, vitals, notes, home medications, prior admissions — and copies every value with the record it came from. It reports, it never interprets.",
   },
   {
-    icon: ShieldAlert,
-    name: "Rules Agent",
-    body: "Runs fast rule-based checks the moment new data arrives, so urgent alerts never wait on a slower model.",
+    icon: ClipboardList,
+    name: "Reconciler",
+    body: "Builds the timeline and surfaces contradictions: events out of order, a note that disagrees with the structured record, hours with no data at all. It names what conflicts and cites both sides, leaving the judgment to the clinician.",
   },
   {
     icon: ActivitySquare,
-    name: "Risk Agent",
-    body: "Applies trained risk models to the current chart, kept separate from the rule-based alerts for a second, independent read.",
+    name: "Risk",
+    body: "Reports risk from two independent sources — deterministic rules with published thresholds, and models trained on 20,000 admissions — and shows both, separately, when they disagree.",
   },
   {
-    icon: Gauge,
-    name: "Scoring Agent",
-    body: "Computes validated clinical scores — PERC, Wells, HEART, qSOFA, NEWS2, and more — and asks for exactly the missing input needed to complete each one.",
+    icon: ShieldAlert,
+    name: "Verifier",
+    body: "Waits for the other three, then checks that every claim traces to a real database row. Anything without a valid source id, or carrying a value that isn't in the data, is rejected before it reaches you.",
   },
   {
     icon: BookOpenCheck,
-    name: "Brief Agent",
-    body: "Synthesizes every other agent's findings into one short, sourced brief a clinician can read in under 10 seconds.",
+    name: "Composer",
+    body: "Writes the final brief from the verified data, copying every value and source id character for character — one short, cited read in under 10 seconds.",
   },
 ];
 
@@ -151,7 +146,9 @@ export default function LandingPage() {
       <section className="mx-auto max-w-7xl px-4 pt-14 sm:px-6 sm:pt-20">
         <div className="grid items-center gap-12 lg:grid-cols-2">
           <Reveal>
-           
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-sev-warning/30 bg-sev-warningBg px-3 py-1 font-mono text-[11px] text-sev-warning">
+              Decision support, not diagnosis
+            </span>
             <h1 className="mt-5 text-4xl font-extrabold leading-tight text-ink-900 sm:text-5xl">
               Every second in the ED
               <br />
@@ -185,7 +182,16 @@ export default function LandingPage() {
           </Reveal>
 
           <Reveal delay={0.1}>
-            <Mascot className="h-[380px] sm:h-[460px]" />
+            <div className="relative">
+              <Mascot tip="Meet GRUS" className="h-[380px] sm:h-[460px]" />
+              <div className="absolute -bottom-5 -left-5 hidden rounded-2xl glass px-4 py-3 shadow-lift sm:block">
+                <p className="flex items-center gap-2 text-sm font-semibold text-ink-900">
+                  <ClipboardList className="h-4 w-4 text-brand-deep" />
+                  Brief ready
+                </p>
+                <p className="mt-0.5 text-xs text-ink-500">Sourced from 12 chart entries</p>
+              </div>
+            </div>
           </Reveal>
         </div>
       </section>
