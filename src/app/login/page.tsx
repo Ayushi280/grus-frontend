@@ -192,6 +192,7 @@ export default function LoginPage() {
                 key="otp"
                 icon={<KeyRound className="h-5 w-5" />}
                 title="Enter your one-time passcode"
+
                 subtitle="We sent a 6-digit code to your registered device."
               >
                 <OtpInput value={otp} onChange={setOtp} onComplete={submitOtp} />
@@ -210,9 +211,20 @@ export default function LoginPage() {
             Access is restricted, encrypted, and audited
           </div>
         </div>
-        <p className="mt-4 text-center text-xs leading-relaxed text-white/70">
-          Demo access — code {DEMO_CREDENTIALS.hospitalCode} · {DEMO_CREDENTIALS.email} / {DEMO_CREDENTIALS.password}
-        </p>
+               <div className="mt-5 rounded-2xl bg-white/15 px-5 py-4 text-center backdrop-blur">
+          <p className="mb-2 font-mono text-xs font-semibold uppercase tracking-widest text-white/80">
+            Demo login
+          </p>
+          <p className="text-base font-bold leading-relaxed text-white">
+            Hospital access code: {DEMO_CREDENTIALS.hospitalCode}
+          </p>
+          <p className="text-base font-bold leading-relaxed text-white">
+            Email: {DEMO_CREDENTIALS.email}
+          </p>
+          <p className="text-base font-bold leading-relaxed text-white">
+            Password: {DEMO_CREDENTIALS.password}
+          </p>
+        </div>
       </motion.div>
     </main>
   );
