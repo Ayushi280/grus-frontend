@@ -70,6 +70,9 @@ function Navbar({ authed }: { authed: boolean }) {
             <NavLink href="/patients" active={pathname?.startsWith("/patients") ?? false}>
               Patients
             </NavLink>
+            <NavLink href="/desk" active={pathname?.startsWith("/desk") ?? false}>
+              Desk
+            </NavLink>
           </nav>
 
           <div className="flex items-center gap-3">
