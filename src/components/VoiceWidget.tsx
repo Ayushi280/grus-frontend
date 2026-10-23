@@ -1,5 +1,11 @@
 "use client";
 
+/**
+ * Floating "Talk to GRUS" launcher — sits just above the Ask GRUS chat
+ * bubble and opens the voice panel the same way the chat opens.
+ * Opening one closes the other, so the two panels never overlap.
+ */
+
 import { useEffect, useState } from "react";
 import { ChevronDown, Mic, Minus } from "lucide-react";
 import { VoicePanel } from "./VoicePanel";
@@ -37,7 +43,7 @@ export function VoiceWidget({ patientShortId }: { patientShortId?: string }) {
                   </span>
                 </div>
                 <p className="mt-1 text-xs leading-snug text-white/75">
-                  Hold the mic and speak, or type. Every number is checked against the record.
+                  Click the mic, speak, then click again to send. Or type. Every number is checked against the record.
                 </p>
               </div>
               <button
