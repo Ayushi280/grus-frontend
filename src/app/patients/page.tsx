@@ -7,6 +7,7 @@ import { api, ApiError } from "@/lib/api";
 import { PatientCard as PatientCardType } from "@/lib/types";
 import { PatientCard, PatientCardSkeleton } from "@/components/PatientCard";
 import { useActivePatient } from "@/lib/activePatientContext";
+import { VoiceWidget } from "@/components/VoiceWidget";
 
 const RISK_OPTIONS = ["", "critical", "high", "moderate", "low", "unknown"];
 
@@ -143,8 +144,10 @@ export default function PatientsPage() {
       </div>
 
       {patients && patients.length === 0 && !error && (
-        <div className="mt-12 text-center text-sm text-ink-500">No patients match these filters.</div>
+                <div className="mt-12 text-center text-sm text-ink-500">No patients match these filters.</div>
       )}
+
+      <VoiceWidget />
     </div>
   );
 }
