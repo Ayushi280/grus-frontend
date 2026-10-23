@@ -37,7 +37,7 @@ const getRecognition = (): any => {
   return SR ? new SR() : null;
 };
 
-export function VoicePanel({ patientShortId }: { patientShortId?: string }) {
+export function VoicePanel({ patientShortId, bare = false }: { patientShortId?: string; bare?: boolean }) {
   const [msgs, setMsgs] = useState<Msg[]>([]);
   const [listening, setListening] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -153,11 +153,13 @@ export function VoicePanel({ patientShortId }: { patientShortId?: string }) {
   };
 
   return (
-    <div className="rounded-lg glass px-4 py-3">
-      <div className="mb-2 flex items-center justify-between">
-        <p className="font-mono text-[11px] uppercase tracking-wide text-ink-500">
-          Talk to GRUS{patientShortId ? ` · patient ${patientShortId}` : ""}
-        </p>
+        <div className={bare ? "flex h-full flex-col px-4 pb-4 pt-3" : "card px-5 py-4"}>
+      <div className={`mb-2 flex items-center ${bare ? "justify-end" : "justify-between"}`}>
+        {!bare && (
+          <p className="section-label">
+            Talk to GRUS{patientShortId ? ` · patient ${patientShortId}` : ""}
+          </p>
+        )}
         <button
           onClick={() => setVoiceOn((v) => !v)}
           className="text-ink-400 hover:text-ink-900"
@@ -167,7 +169,7 @@ export function VoicePanel({ patientShortId }: { patientShortId?: string }) {
         </button>
       </div>
 
-      <div className="max-h-72 space-y-2 overflow-y-auto pr-1 text-sm">
+      <div className={`${bare ? "min-h-0 flex-1" : "max-h-72"} space-y-2 overflow-y-auto pr-1 text-sm`}>
         {msgs.length === 0 && (
           <p className="text-xs text-ink-400">
             Hold the mic and ask, for example: &ldquo;What was the INR on arrival?&rdquo;, &ldquo;Current
@@ -180,7 +182,7 @@ export function VoicePanel({ patientShortId }: { patientShortId?: string }) {
               {m.text}
             </div>
           ) : m.who === "grus" ? (
-            <div key={i} className="mr-8 rounded-lg border border-teal-500/30 bg-teal-50/60 px-3 py-2 text-ink-900">
+            <div key={i} className="mr-8 rounded-lg border border-brand-mid/25 bg-leaf-soft/70 px-3 py-2 text-ink-900">
               <p>{m.text}</p>
               {m.tools.length > 0 && (
                 <p className="mt-1 font-mono text-[10px] text-ink-400">
@@ -213,7 +215,7 @@ export function VoicePanel({ patientShortId }: { patientShortId?: string }) {
             onTouchEnd={stopListening}
             disabled={busy}
             className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-white transition ${
-              listening ? "scale-110 bg-sev-critical" : "bg-teal-600 hover:bg-teal-700"
+              listening ? "scale-110 bg-sev-critical" : "bg-brand-deep hover:bg-brand-mid"
             } disabled:opacity-40`}
             title="Hold to talk"
           >
